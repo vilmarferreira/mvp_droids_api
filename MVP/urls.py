@@ -15,10 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView
+)
 
 from MVP.routers import ROUTER
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api-token-auth/", TokenObtainPairView.as_view()),
+    path("api-token-verify/", TokenVerifyView.as_view()),
+    path("api-token-refresh/", TokenRefreshView.as_view()),
     path("api/v1/", include((ROUTER.urls, "api"), namespace="v1")),
 ]
