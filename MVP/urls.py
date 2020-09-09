@@ -22,9 +22,11 @@ from rest_framework_simplejwt.views import (
 )
 
 from MVP.routers import ROUTER
+from auth.viewsets import RegisterView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api-register/", RegisterView.as_view()),
     path("api-token-auth/", TokenObtainPairView.as_view()),
     path("api-token-verify/", TokenVerifyView.as_view()),
     path("api-token-refresh/", TokenRefreshView.as_view()),
