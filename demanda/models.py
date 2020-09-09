@@ -19,3 +19,6 @@ class Demanda(models.Model):
             return format_html(a)
         else:
             return format_html(f)
+    def finalizar(self):
+        self.status = 'F'
+        self.save()

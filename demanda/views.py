@@ -1,3 +1,6 @@
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from contato.serializers import ContatoSerializer
 from demanda.models import Demanda
@@ -44,3 +47,13 @@ class DemandaViewSet(ModelViewSet):
             self.update_endereco(newendereco)
         return super().update(request, *args, **kwargs)
 
+    @action(methods=["put"], detail=True, url_path="finalizar")
+    def finalizar_demanda(self, *_args, **_kwargs):
+        instance = self.get_object()
+        try:
+            instance.finalizar()
+            return Response(
+                self.get_serializer(instance=instance).data, status=status.HTTP_200_OK
+            )
+        except Exception as e:
+            return Response(e,status=status.HTTP_400_BAD_REQUEST)
